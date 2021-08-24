@@ -30,3 +30,5 @@ class Skills(Enum):
 class CharacterSheet:
     def __init__(self):
         prof_mod = {Skills.ATHLETICS: 1 }
+        for s in filter(lambda s: s.is_dex(), Skills):
+            print(s)
