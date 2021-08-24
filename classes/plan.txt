@@ -1,0 +1,50 @@
+
+Implicit
+Player Name
+
+Entered by player
+Character Name
+Race(s)
+Class
+Level
+Age
+Languages
+Diety
+Alignment
+Gender
+Size
+Stats (could also be rolled + race & class)
+    strength
+    dexterity
+    constitution
+    intelligence
+    wisdom
+    charisma
+
+
+Generated:
+Saving Throws (from class)
+Modifiers (Stats)
+Proficiency Bonus
+Skills (From stats & class & player choice & race):
+    Athletics (str)
+    Acrobatics (dex)
+    Sleight of Hand (dex)
+    Stealth (dex)
+    Arcana (int)
+    History (int)
+    Investigation (int)
+    Nature (int)
+    Religion (int)
+    Animal Handling (wis)
+    Insight (wis)
+    Medicine (wis)
+    Perception (wis)
+    Survival (wis)
+    Deception (cha)
+    Intimidation (cha)
+    Performance (cha)
+    Persuasion (cha)
+
+
+
