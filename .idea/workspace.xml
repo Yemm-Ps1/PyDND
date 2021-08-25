@@ -15,11 +15,11 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/roll_handler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="17" lean-forward="true" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+            <state relative-caret-position="-653">
+              <caret line="26" column="41" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -27,16 +27,52 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/enum.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/controller/test_roll_handler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="347" selection-start-line="347" selection-end-line="347" />
+            <state relative-caret-position="2006">
+              <caret line="118" lean-forward="true" selection-start-line="118" selection-end-line="118" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/character_class/sheet_enums.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>verifyRoll</find>
+      <find>\\d</find>
+      <find>ROLL_FULL_MATCHER</find>
+      <find>verifyRollExpression</find>
+      <find>self.handler</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>verifyRollExpression</replace>
+      <replace>\\d</replace>
+      <replace>\\\d</replace>
+      <replace>\\\\d</replace>
+      <replace>isValidExpression</replace>
+      <replace>RollHandler</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -45,7 +81,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/roll_handler.py" />
+        <option value="$PROJECT_DIR$/classes/character.py" />
+        <option value="$PROJECT_DIR$/view/print/main_terminal_printer.py" />
         <option value="$PROJECT_DIR$/controller/roll_handler.py" />
+        <option value="$PROJECT_DIR$/test/controller/test_roll_handler.py" />
       </list>
     </option>
   </component>
@@ -60,6 +99,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -70,13 +110,28 @@
             <path>
               <item name="PyDND" type="b2602c69:ProjectViewProjectNode" />
               <item name="PyDND" type="462c0819:PsiDirectoryNode" />
+              <item name="character_class" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PyDND" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PyDND" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PyDND" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PyDND" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PyDND" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PyDND" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -106,7 +161,7 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/controller" />
+      <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
@@ -119,31 +174,76 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="roll_handler" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="Unittests for test_roll_handler.TestRollHandler" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="PyDND" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test/controller" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/roll_handler.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_roll_handler.TestRollHandler&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="Unittests for test_roll_handler.TestRollHandler.test_roll_largeRoll_shouldHaveSamplesInRange" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="PyDND" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test/controller" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_roll_handler.TestRollHandler.test_roll_largeRoll_shouldHaveSamplesInRange&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for test_roll_handler.TestRollHandler.test_roll_oneDTwenty_shouldHaveSamplesInRange" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="PyDND" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test/controller" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_roll_handler.TestRollHandler.test_roll_oneDTwenty_shouldHaveSamplesInRange&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests in test_roll_handler.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="PyDND" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test/controller" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/test/controller/test_roll_handler.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.roll_handler (1)" />
+      <item itemvalue="Python tests.Unittests in test_roll_handler.py" />
+      <item itemvalue="Python tests.Unittests for test_roll_handler.TestRollHandler.test_roll_oneDTwenty_shouldHaveSamplesInRange" />
+      <item itemvalue="Python tests.Unittests for test_roll_handler.TestRollHandler.test_roll_largeRoll_shouldHaveSamplesInRange" />
+      <item itemvalue="Python tests.Unittests for test_roll_handler.TestRollHandler" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.roll_handler (1)" />
-        <item itemvalue="Python.roll_handler" />
+        <item itemvalue="Python tests.Unittests for test_roll_handler.TestRollHandler" />
+        <item itemvalue="Python tests.Unittests for test_roll_handler.TestRollHandler.test_roll_largeRoll_shouldHaveSamplesInRange" />
+        <item itemvalue="Python tests.Unittests in test_roll_handler.py" />
+        <item itemvalue="Python tests.Unittests for test_roll_handler.TestRollHandler.test_roll_oneDTwenty_shouldHaveSamplesInRange" />
       </list>
     </recent_temporary>
   </component>
@@ -160,19 +260,51 @@
     </task>
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="Unittests_for_test_roll_handler_TestRollHandler - 2021.08.25 at 11h 54m 35s.xml">
+      <configuration name="Unittests for test_roll_handler.TestRollHandler" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_roll_handler_TestRollHandler - 2021.08.25 at 11h 54m 46s.xml">
+      <configuration name="Unittests for test_roll_handler.TestRollHandler" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_roll_handler_TestRollHandler - 2021.08.25 at 11h 55m 32s.xml">
+      <configuration name="Unittests for test_roll_handler.TestRollHandler" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_roll_handler_TestRollHandler - 2021.08.25 at 11h 59m 21s.xml">
+      <configuration name="Unittests for test_roll_handler.TestRollHandler" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_roll_handler_TestRollHandler - 2021.08.25 at 12h 00m 43s.xml">
+      <configuration name="Unittests for test_roll_handler.TestRollHandler" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_roll_handler_TestRollHandler - 2021.08.25 at 12h 00m 52s.xml">
+      <configuration name="Unittests for test_roll_handler.TestRollHandler" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_roll_handler_TestRollHandler - 2021.08.25 at 12h 06m 37s.xml">
+      <configuration name="Unittests for test_roll_handler.TestRollHandler" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_roll_handler_TestRollHandler - 2021.08.25 at 12h 14m 30s.xml">
+      <configuration name="Unittests for test_roll_handler.TestRollHandler" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_roll_handler_TestRollHandler - 2021.08.25 at 12h 15m 32s.xml">
+      <configuration name="Unittests for test_roll_handler.TestRollHandler" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_roll_handler_TestRollHandler - 2021.08.25 at 12h 15m 56s.xml">
+      <configuration name="Unittests for test_roll_handler.TestRollHandler" configurationId="tests" />
+    </history-entry>
+  </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Project Explorer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="DB Browser" order="4" weight="0.32982087" />
       <window_info id="Job Explorer" order="5" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -191,9 +323,9 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/command_parser.py" />
     <entry file="file://$PROJECT_DIR$/roll_handler.py" />
-    <entry file="file://$PROJECT_DIR$/controller/command_parser.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/enum.py" />
+    <entry file="file://$PROJECT_DIR$/classes/character.py" />
+    <entry file="file://$PROJECT_DIR$/classes/skills_enum.py" />
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/enum.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -201,12 +333,75 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/classes/character_sheet.py" />
+    <entry file="file://$PROJECT_DIR$/classes/dnd_classes.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/random.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3604">
+          <caret line="221" selection-start-line="221" selection-end-line="221" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/character_class/test_character_sheet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-111">
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/character_class/character.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/character_class/plan.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/print/main_terminal_printer.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/character_class/dnd_classes.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/character_class/character_sheet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/character_class/sheet_enums.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/command_parser.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/controller/roll_handler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="17" lean-forward="true" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+        <state relative-caret-position="-653">
+          <caret line="26" column="41" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/controller/test_roll_handler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2006">
+          <caret line="118" lean-forward="true" selection-start-line="118" selection-end-line="118" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
