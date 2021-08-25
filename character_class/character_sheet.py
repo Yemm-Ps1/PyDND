@@ -5,7 +5,7 @@ import math
 
 
 class SheetData():
-    def __init__(self, dnd_class: list = [DndClass.Rogue(1)]):
+    def __init__(self, dnd_class: list):
         self.classes = dnd_class
         self.ability_scores = {
             Ability.STR : {"Value" : 10, "Proficient" : self._get_class_proficiency(Ability.STR)},
@@ -64,6 +64,11 @@ class SheetData():
         self.ability_scores[ability]["Value"] = self.ability_scores[ability]["Value"] if score is None else score
         self.ability_scores[ability]["Proficient"] = self.ability_scores[ability]["Proficient"] if is_proficient is None else is_proficient
 
+    def get_max_hp(self):
+        hp = 0
+        for dnd_class in self.classes:
+            hp += dnd_class.hit_die * dnd_class.level
+        return hp
 
     def set_strength(self, score: int = None, is_proficient: bool = None):
         self._set_ability(Ability.STR, score, is_proficient)
@@ -128,10 +133,6 @@ class SheetData():
         
     def get_charisma_modifier(self):
         return self._get_mod(self.ability_scores[Ability.CHA])
-
-
-
-
 
 
 class CharacterSheet:

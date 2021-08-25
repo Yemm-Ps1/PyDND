@@ -1,9 +1,6 @@
 import unittest
 import character_sheet as CharacterSheet
 import dnd_classes as DndClass
-from sheet_enums import Ability
-
-
 
 class SheetTest(unittest.TestCase):
     @classmethod
@@ -21,18 +18,21 @@ class SheetTest(unittest.TestCase):
         self.assertEqual(sheet.get_dexterity(), 10)
         self.assertEqual(sheet.get_dexterity_saving_throw(), 2)
         self.assertEqual(sheet.get_strength_saving_throw(), 0)
+        self.assertEqual(sheet.get_max_hp(), 8)
 
     def test_levelOneBarbarian(self):
         sheet = CharacterSheet.SheetData([DndClass.Barbarian(1)])
         self.assertEqual(sheet.get_strength(), 10)
         self.assertEqual(sheet.get_strength_saving_throw(), 2)
         self.assertEqual(sheet.get_dexterity_saving_throw(), 0)
+        self.assertEqual(sheet.get_max_hp(), 12)
 
     def test_levelTwoRogueBarbarian(self):
         sheet = CharacterSheet.SheetData([DndClass.Rogue(1), DndClass.Barbarian(1)])
         self.assertEqual(sheet.get_strength(), 10)
         self.assertEqual(sheet.get_strength_saving_throw(), 2)
         self.assertEqual(sheet.get_dexterity_saving_throw(), 2)
+        self.assertEqual(sheet.get_max_hp(), 20)
 
     # def test_draw_lowerBound(self):
     #     print("\nTesting lower bound Tie.")
