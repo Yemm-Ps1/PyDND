@@ -1,5 +1,6 @@
 from enum import Enum, auto
 
+
 class Ability(Enum):
     STR = auto()
     DEX = auto()
@@ -7,6 +8,7 @@ class Ability(Enum):
     INT = auto()
     WIS = auto()
     CHA = auto()
+
 
 class Skill(Enum):
     ACROBATICS      = auto()

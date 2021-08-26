@@ -1,4 +1,5 @@
-from sheet_enums import Ability
+from model.sheet_enums import Ability
+
 
 class Class:
     def __init__(self, name, hit_die, level, saving_throws: list = []):
@@ -7,9 +8,11 @@ class Class:
         self.level = level
         self.saving_throws = saving_throws
 
+
 class Rogue(Class):
     def __init__(self, level):
         super().__init__("Rogue", 8, level, [Ability.DEX, Ability.INT])
+
 
 class Barbarian(Class):
     def __init__(self, level):

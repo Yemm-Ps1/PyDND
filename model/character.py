@@ -1,8 +1,7 @@
-import character_sheet as CharacterSheet
+from model import character_sheet as CharacterSheet
 
 
-
-class HealthSystem():
+class HealthSystem:
     def __init__(self, dnd_class):
         self.hit_die = dnd_class.hit_die
         self.level = dnd_class.level
@@ -12,7 +11,6 @@ class HealthSystem():
 
     def update_hp(self):
         pass
-
 
 
 class Character:
@@ -25,6 +23,7 @@ class Character:
         print("My name is " + self.name)
     def get_max_health(self):
         return self._health.get_max_health()
+
 
 class Player(Character):
     def __init__(self, name, dnd_class):

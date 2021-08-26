@@ -1,6 +1,6 @@
 import unittest
-import character_sheet as CharacterSheet
-import dnd_classes as DndClass
+from model import character_sheet as CharacterSheet, dnd_classes as DndClass
+
 
 class SheetTest(unittest.TestCase):
     @classmethod
@@ -38,6 +38,7 @@ class SheetTest(unittest.TestCase):
     #     print("\nTesting lower bound Tie.")
     #     for choices in self.choiceArray:
     #         self.assertEqual(CalculateWinner(0, 0, choices), 0)
+
 
 if __name__ == '__main__':
     unittest.main()

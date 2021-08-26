@@ -1,10 +1,8 @@
-import dnd_classes as DndClass
-from sheet_enums import *
+from model.sheet_enums import *
 import math
 
 
-
-class SheetData():
+class SheetData:
     def __init__(self, dnd_class: list):
         self.classes = dnd_class
         self.ability_scores = {
@@ -124,6 +122,7 @@ class SheetData():
         
     def get_wisdom_modifier(self):
         return self._get_mod(self.ability_scores[Ability.WIS])
+
 
     def set_charisma(self, score: int = None, is_proficient: bool = None):
         self._set_ability(Ability.CHA, score, is_proficient)
