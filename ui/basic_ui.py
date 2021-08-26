@@ -12,19 +12,22 @@ Just prints the native python console.
 
 class BasicUI(AbstractUI):
     def __init__(self):
-        pass
+        self.active = True
 
     def submit_main_terminal_message(self, message):
         """ Submits a message to the main terminal where user inputs commands. """
-        print(message)
+        if self.active:
+            print(message)
 
     def submit_main_terminal_error_message(self, message: str):
         """ Submits an error message to the main terminal and colors it red. """
-        print(f"{Fore.RED}{message}{Style.RESET_ALL}")
+        if self.active:
+            print(f"{Fore.RED}{message}{Style.RESET_ALL}")
 
     def invalidate_health_display(self):
         """ Indicates that health display would be invalidated if it existed. """
-        print(f"{Fore.BLUE}Healths Invalidated!{Style.RESET_ALL}")
+        if self.active:
+            print(f"{Fore.BLUE}Healths Invalidated!{Style.RESET_ALL}")
 
     @staticmethod
     def _preformat_colors(message: str):
@@ -35,6 +38,8 @@ class BasicUI(AbstractUI):
         # TODO numbers with color
         # TODO replace character names with color
 
+    def set_active(self, to_activate: bool):
+        self.active = to_activate
 
 if __name__ == '__main__':
     # print(re.sub("\\d+", "->\g<0><-", "a b c 5 e f"))

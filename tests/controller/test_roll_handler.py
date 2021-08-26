@@ -8,6 +8,7 @@ class TestRollHandler(unittest.TestCase):
 
     def setUp(self):
         self.handler = RollHandler()
+        self.handler.ui.set_active(False)  # suppresses messages to make test terminal manageable
 
     def test_isValidExpress_d20_shouldReturnTrue(self):
         in_expression = "d20 "
