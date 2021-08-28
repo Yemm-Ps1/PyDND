@@ -140,4 +140,3 @@ class CharacterSheet:
         self.sheet_data = SheetData(dnd_class)
 
 
-

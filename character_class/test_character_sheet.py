@@ -13,6 +13,7 @@ class SheetTest(unittest.TestCase):
     def tearDown(self):
         pass
 
+
     def test_levelOneRogue(self):
         sheet = CharacterSheet.SheetData([DndClass.Rogue(1)])
         self.assertEqual(sheet.get_dexterity(), 10)
@@ -41,6 +42,7 @@ class SheetTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
 
 # stats = SheetData([DndClass.Rogue(1), DndClass.Barbarian(1)])
 # stats.set_strength(18)
