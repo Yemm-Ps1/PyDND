@@ -24,11 +24,13 @@ class MainWindow(QWidget):
         self.history_text: QLabel = QLabel()
         self.history_text.setFont(self.STANDARD_FONT)
         self.history_text.setText("This is some text.\nThis is some more.")
+        self.history_text.setStyleSheet("line-spacing: 40px")
         self.input_text: QConsole = QConsole()
 
         self.input_text.returnPressed.connect(self.on_pressed)
         self.input_text.setFont(self.STANDARD_FONT)
-        self.input_text.setStyleSheet("border: none")
+        self.input_text.setStyleSheet("qproperty-frame: false; padding-top:-7px; padding-left:-2px")
+        # self.input_text.setStyleSheet("qproperty-frame: false; padding:0px;")
 
         self.main_layout.addWidget(self.history_text)
         self.main_layout.addWidget(self.input_text)
