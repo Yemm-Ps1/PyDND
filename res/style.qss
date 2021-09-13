@@ -1,0 +1,46 @@
+QWidget#window {
+    background-color: @ColorTerminal;
+    color: @ColorWhite;
+}
+
+QWidget#terminal {
+    background-color: transparent;
+    color: @ColorWhite;
+}
+
+QLabel {
+    color: @ColorWhite;
+    background-color: transparent;
+    font-size: @MediumTextSize;
+    font-family: Consolas;
+
+}
+
+QLabel#healthBox {
+    border: @MediumBorderWidth solid @ColorRed;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+QLabel#inventoryBox {
+    border: @MediumBorderWidth solid @ColorBlue;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+QLineEdit {
+    background-color: transparent;
+    color: @ColorWhite;
+    qproperty-frame: false;
+    padding-top:-7px;
+    padding-left:-2px;
+    font-size: @MediumTextSize;
+    font-family: Consolas;
+}
+
+
+QScrollArea {
+    border: none;
+    background-color: transparent;
+}
+

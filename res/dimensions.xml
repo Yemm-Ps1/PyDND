@@ -1,0 +1,4 @@
+<resources>
+    <dimen name = "MediumTextSize">24px</dimen>
+    <dimen name= "MediumBorderWidth">4px</dimen>
+</resources>

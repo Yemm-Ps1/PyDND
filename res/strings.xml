@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PyDnd</string>
+    <string name="formatRolled">Rolled: %d</string>
+</resources>
