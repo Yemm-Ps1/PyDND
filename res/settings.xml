@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <setting name="WindowOpacity">0.95</setting>
+    <setting name="HorizontalBreakPoint">1000</setting>
+</resources>

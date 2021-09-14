@@ -7,6 +7,7 @@ COLORS_PATH = "../res/colors.xml"
 STYLE_SHEET_PATH = "../res/style.qss"
 DIMENSIONS_PATH = "../res/dimensions.xml"
 STRINGS_PATH = "../res/strings.xml"
+SETTINGS_PATH = "../res/settings.xml"
 R_FILE_PATH = "../res/R.py"
 
 VALID_NAME_REGEX = "[A-Za-z_]+"
@@ -73,6 +74,7 @@ with open(STYLE_SHEET_PATH) as f:
 COLOR_PALETTE = _get_dict_from_xml_path(COLORS_PATH)
 DIMENSIONS = _get_dict_from_xml_path(DIMENSIONS_PATH)
 STRINGS = _get_dict_from_xml_path(STRINGS_PATH)
+SETTINGS = _get_dict_from_xml_path(SETTINGS_PATH)
 _validate_resource_integrity()
 
 # Substitutes values into stylesheet
@@ -84,7 +86,7 @@ RESOURCES = dict()
 enum_prefix = '''# Automatically generated file. DO NOT MODIFY\n\nfrom enum import IntEnum\n\n\nclass RegistryId(IntEnum):\n'''
 r_file = open(R_FILE_PATH, "w")
 r_file.write(enum_prefix)
-merged = {**COLOR_PALETTE, **DIMENSIONS, **STRINGS}
+merged = {**COLOR_PALETTE, **DIMENSIONS, **STRINGS, **SETTINGS}
 for i, k_v in enumerate(merged.items()):
     _write_enum_to_file(r_file, k_v[0], i)
     RESOURCES[i] = k_v[1]
@@ -105,12 +107,16 @@ def get_dimensions() -> dict:
     return DIMENSIONS
 
 
-def get_style_sheet() -> str:
-    return STYLE_SHEET
+def get_settings() -> dict:
+    return SETTINGS
 
 
 def get_strings() -> dict:
     return STRINGS
+
+
+def get_style_sheet() -> str:
+    return STYLE_SHEET
 
 
 if __name__ == '__main__':

@@ -18,3 +18,5 @@ class RegistryId(IntEnum):
     LeadInputText = 11
     HealthLbl = 12
     InventoryLbl = 13
+    WindowOpacity = 14
+    HorizontalBreakPoint = 15
