@@ -6,5 +6,8 @@
     <string name="HealthLbl">Health</string>
     <string name="InventoryLbl">Inventory</string>
 
-    <string name="ErrorMessageNoArgumentPathForCommand">No valid argument path defined for command: ::param:: (::param::)</string>
+    <string name="ErrorMessageNoArgumentPathForCommand">No valid argument path defined for command: ::param:: (::param::).</string>
+    <string name="ErrorMessageArgumentPathNotSpecifiedForCommand">No validation specified for command ::param::.</string>
+    <string name="ErrorMessageExecutionNotSpecifiedForCommand">No execution specified for command ::param:: (::param::).</string>
+    <string name="ErrorUnrecognizedCommandOrShorthand">No command matching: ::param::.</string>
 </resources>

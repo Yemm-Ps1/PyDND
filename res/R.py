@@ -19,5 +19,7 @@ class RegistryId(IntEnum):
     HealthLbl = 12
     InventoryLbl = 13
     ErrorMessageNoArgumentPathForCommand = 14
-    WindowOpacity = 15
-    HorizontalBreakPoint = 16
+    ErrorMessageArgumentPathNotSpecifiedForCommand = 15
+    ErrorMessageExecutionNotSpecifiedForCommand = 16
+    ErrorUnrecognizedCommandOrShorthand = 17
+    WindowOpacity = 18

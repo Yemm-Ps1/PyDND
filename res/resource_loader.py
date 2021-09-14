@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 import re
 
-from typing.io import TextIO
+from typing import TextIO
 
 COLORS_PATH = "../res/colors.xml"
 STYLE_SHEET_PATH = "../res/style.qss"
@@ -100,7 +100,7 @@ def get_resource(reg_id: RegistryId) -> str:
     return RESOURCES[reg_id]
 
 
-def get_resource_with_sub(reg_id: RegistryId, *args) -> str:
+def get_formatted_resource(reg_id: RegistryId, *args) -> str:
     to_rtn: str = RESOURCES[reg_id]
     matches = re.findall(PARAM_TOKEN, to_rtn)
     count_in_str = len(matches)
@@ -131,5 +131,5 @@ def get_style_sheet() -> str:
 
 
 if __name__ == '__main__':
-    found = get_resource_with_sub(RegistryId.ErrorMessageNoArgumentPathForCommand, "Roll", "!r")
+    found = get_formatted_resource(RegistryId.ErrorMessageNoArgumentPathForCommand, "Roll", "!r")
     print(found)
