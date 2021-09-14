@@ -5,4 +5,6 @@
     <string name="LeadInputText">></string>
     <string name="HealthLbl">Health</string>
     <string name="InventoryLbl">Inventory</string>
+
+    <string name="ErrorMessageNoArgumentPathForCommand">No valid argument path defined for command: ::param:: (::param::)</string>
 </resources>

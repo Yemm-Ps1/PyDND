@@ -9,6 +9,7 @@ DIMENSIONS_PATH = "../res/dimensions.xml"
 STRINGS_PATH = "../res/strings.xml"
 SETTINGS_PATH = "../res/settings.xml"
 R_FILE_PATH = "../res/R.py"
+PARAM_TOKEN = "::param::"
 
 VALID_NAME_REGEX = "[A-Za-z_]+"
 VALID_HEX_REGEX = "#([0-9A-Fa-f]{3})([0-9A-Fa-f]{3})?"
@@ -99,6 +100,16 @@ def get_resource(reg_id: RegistryId) -> str:
     return RESOURCES[reg_id]
 
 
+def get_resource_with_sub(reg_id: RegistryId, *args) -> str:
+    to_rtn: str = RESOURCES[reg_id]
+    matches = re.findall(PARAM_TOKEN, to_rtn)
+    count_in_str = len(matches)
+    if not len(matches) == len(args):
+        raise Exception(f"Parameter count mismatch in string: \"{to_rtn}\". Expeted {len(args)}")
+    print(to_rtn.replace(PARAM_TOKEN, "{}"))
+    print(args)
+    return to_rtn.replace(PARAM_TOKEN, "{}").format(*args)
+
 def get_color_palette() -> dict:
     return COLOR_PALETTE
 
@@ -120,13 +131,5 @@ def get_style_sheet() -> str:
 
 
 if __name__ == '__main__':
-    # palette = get_color_palette()
-    # print(palette)
-    # dimens = get_dimensions()
-    # print(dimens)
-    # strings = get_strings()
-    # print(strings)
-    # style_sheet = get_style_sheet()
-    # print(style_sheet)
-    print(RESOURCES)
-    # print(get_resource(RegistryId.C))
+    found = get_resource_with_sub(RegistryId.ErrorMessageNoArgumentPathForCommand, "Roll", "!r")
+    print(found)
