@@ -1,9 +1,13 @@
+import math
 import random
 import re
 from enum import Enum
 
 from ui.abstract_ui import AbstractUI
 from ui.basic_ui import BasicUI
+from model.character_sheet import SheetData
+from model.sheet_enums import Ability
+from model.dnd_classes import Rogue
 
 ONE_DIE_ROLL_MATCHER = re.compile("((\\d*)d(\\d+))")
 ONE_D_TWENTY_MATCHER = re.compile("([+-]*\\d*)*1d20([+-]*\\d+)*")
@@ -39,6 +43,30 @@ class RollType(Enum):
 class RollHandler:
     def __init__(self, ui: AbstractUI = None):
         self.ui = ui if ui else BasicUI()
+
+    def ability_saving_throw(self, dc: int, modifier: int, defender_sheet: SheetData = None, roll_type: RollType = RollType.STANDARD,
+                             ability_type: Ability = None) -> bool:
+        to_add = modifier
+        if defender_sheet:
+            if not ability_type:
+                self.ui.submit_main_terminal_error_message("Ability type not specified. Specify ability type or use raw dc.")
+                return None
+            to_add += self.get_ability_mod(defender_sheet, ability_type) + (defender_sheet._get_proficiency() if self.is_proficient(defender_sheet, ability_type) else 0)
+
+        self.ui.submit_main_terminal_message(f"Making saving throw against {dc}")
+        saving_throw = self.roll(f"1d20 + {to_add}", roll_type=roll_type)
+        was_success = saving_throw >= dc
+        self.ui.submit_main_terminal_message("Saving throw passed :)" if was_success else "Saving throw failed :(")
+
+        return was_success
+
+    # TODO migrate to character sheet
+    def get_ability_mod(self, sheet: SheetData, ability_type: Ability = None):
+        return math.floor(sheet.ability_scores[ability_type]["Value"]/2) - 5
+
+    # TODO migrate to character sheet
+    def is_proficient(self, sheet: SheetData, ability_type: Ability = None):
+        return sheet.ability_scores[ability_type]["Proficient"]
 
     def roll(self, roll_expression: str, roll_type: RollType = RollType.STANDARD) -> int:
         """
@@ -138,8 +166,10 @@ class RollHandler:
 
 
 if __name__ == '__main__':
-    in_str = "1d20+5"
+    dc = 10
+    mod = 0
+    sheet = SheetData([Rogue(10)])
     handler = RollHandler()
-    print("Input:", in_str)
-    v = handler.roll(in_str, roll_type=RollType.DISADVANTAGE)
+    print(f"dc = {dc}, mod = {mod}")
+    v = handler.ability_saving_throw(10, 0, defender_sheet=sheet, ability_type=Ability.STR, roll_type=None)
     print("Result:", v)

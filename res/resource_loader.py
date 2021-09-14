@@ -1,6 +1,8 @@
 import xml.etree.ElementTree as ET
 import re
 
+from typing.io import TextIO
+
 COLORS_PATH = "../res/colors.xml"
 STYLE_SHEET_PATH = "../res/style.qss"
 DIMENSIONS_PATH = "../res/dimensions.xml"
@@ -56,10 +58,13 @@ def _validate_resource_integrity():
             raise Exception(f"Invalid dimension name: {dimen_name}. Dimension names in res/dimensions.xml must have "
                             f"consist of capital letters and underscores only")
         if not valid_dimen_pattern.fullmatch(dimen_val):
-            raise Exception(f"Invalid dimension value for: {dimen_name} -> {dimen_val}. Dimension values in res/dimensions.xml must be in pixel format e.g. 10px or 32px")
+            raise Exception(
+                f"Invalid dimension value for: {dimen_name} -> {dimen_val}. Dimension values in res/dimensions.xml must be in pixel format e.g. 10px or 32px")
 
-def _generate_r_file():
-    r_file = my_file = open("test_file.txt", "w")
+
+def _write_enum_to_file(file: TextIO, name: str, num: int):
+    file.write(f"    {name} = {num}\n")
+
 
 with open(STYLE_SHEET_PATH) as f:
     STYLE_SHEET: str = f.read()
@@ -74,28 +79,48 @@ _validate_resource_integrity()
 STYLE_SHEET = _inject_in_style_sheet(STYLE_SHEET, COLOR_PALETTE)
 STYLE_SHEET = _inject_in_style_sheet(STYLE_SHEET, DIMENSIONS)
 
+# Generates R.py so that resources can be found by id
+RESOURCES = dict()
+enum_prefix = '''# Automatically generated file. DO NOT MODIFY\n\nfrom enum import IntEnum\n\n\nclass RegistryId(IntEnum):\n'''
+r_file = open(R_FILE_PATH, "w")
+r_file.write(enum_prefix)
+merged = {**COLOR_PALETTE, **DIMENSIONS, **STRINGS}
+for i, k_v in enumerate(merged.items()):
+    _write_enum_to_file(r_file, k_v[0], i)
+    RESOURCES[i] = k_v[1]
+r_file.close()
 
-def get_color_palette():
+from res.R import RegistryId
+
+
+def get_resource(reg_id: RegistryId) -> str:
+    return RESOURCES[reg_id]
+
+
+def get_color_palette() -> dict:
     return COLOR_PALETTE
 
 
-def get_dimensions():
+def get_dimensions() -> dict:
     return DIMENSIONS
 
 
-def get_style_sheet():
+def get_style_sheet() -> str:
     return STYLE_SHEET
 
-def get_strings():
+
+def get_strings() -> dict:
     return STRINGS
 
 
 if __name__ == '__main__':
-    palette = get_color_palette()
-    print(palette)
-    dimens = get_dimensions()
-    print(dimens)
-    strings = get_strings()
-    print(strings)
-    style_sheet = get_style_sheet()
-    print(style_sheet)
+    # palette = get_color_palette()
+    # print(palette)
+    # dimens = get_dimensions()
+    # print(dimens)
+    # strings = get_strings()
+    # print(strings)
+    # style_sheet = get_style_sheet()
+    # print(style_sheet)
+    print(RESOURCES)
+    # print(get_resource(RegistryId.C))

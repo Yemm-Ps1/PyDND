@@ -6,10 +6,11 @@ import threading
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QBoxLayout, QScrollArea
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QBoxLayout, QScrollArea, QHBoxLayout
 from qtpy import QtGui
 
-from res.resource_loader import get_style_sheet, get_strings
+from res.resource_loader import get_style_sheet, get_strings, get_resource
+from res.R import RegistryId
 from ui.abstract_ui import AbstractUI
 
 import re
@@ -27,11 +28,12 @@ class MainWindow(QWidget):
     def __init__(self):
         QWidget.__init__(self)
         self.setObjectName("window")
-        self.setWindowTitle(get_strings()["app_name"])
+        self.setWindowTitle(get_resource(RegistryId.AppName))
         self.setStyleSheet(get_style_sheet())
         print("Stylesheet:", self.styleSheet())
         self.main_layout: QBoxLayout = None
         self.set_layout_orientation(MainLayoutTypes.STANDARD)
+        self.main_layout.setSpacing(0)
 
         self.terminal_scroll: QScrollArea = QScrollArea()
         self.terminal_scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
@@ -66,25 +68,61 @@ class TerminalWidget(QWidget):
     def __init__(self, scroll_container: QScrollArea = None):
         QWidget.__init__(self)
         self.setObjectName("terminal")
+        # self.input_lead = get_resource(R.id)
+        self.lead_input_str: str = get_resource(RegistryId.LeadInputText)
+        # Initiates scroll container
         self.scroll_container: QScrollArea = scroll_container
 
         self.scroll_container.verticalScrollBar().setVisible(False)
         # self.scroll_container.setFrameShape(QtFrame.)
         self.terminal_layout: QVBoxLayout = QVBoxLayout()
         self.terminal_layout.setAlignment(Qt.AlignTop)
+        self.terminal_layout.setSpacing(0)
         self.setLayout(self.terminal_layout)
 
+        # Initiates terminal log
         self.history_text: QLabel = QLabel()
-        self.history_text.setText((40 * "Wow\n") + "Wow")
+        self.history_text.setObjectName("historyText")
+        # TODO replace sample text
+        sample_text = "> Players\n\tJamuel Sven Varys Woodrow Whiskers\n" \
+                      "> !ra 1d20 + 5\n\tRolled: 20\n\tRolled: 20\n\tResult: 20\n> !r 2d15 + 5\n\tRolled: 15\n\tRolled: 15\n\tResult: 30\n> Hit Arnac 30\n\tArnac has taken 742 damage.\n" \
+                      "> !rd 1d20\n\tRolled: 20\n\tRolled: 20\n\tResult: 20\n> !r 4d15 + 5\n\tRolled: 15\n\tRolled: 15\n\tRolled: 15\n\tRolled: 15\n\tResult: 60\n" \
+                      "> Hit Whiskers 60\n\tWhiskers is at 0 health.\n\tWhiskers is dead."
+        self.history_text.setText(sample_text)
         self.history_text.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
         self.terminal_layout.addWidget(self.history_text)
+
+        # Initiates terminal input row
+        self.input_row_holder: QWidget = QWidget()
+        # self.input_row_holder.setFixedHeight(self.history_text.fontMetrics().)
+        self.input_row_holder.setObjectName("inputRow")
+        self.input_row_holder.setContentsMargins(0, 0, 0, 0)
+        self.input_row_layout = QBoxLayout(QBoxLayout.Direction.LeftToRight, self.input_row_holder)
+        self.input_row_layout.setContentsMargins(0, 0, 0, 0)
+        self.input_row_layout.setSpacing(0)
+        self.input_row_holder.setLayout(self.input_row_layout)
+
+        self.input_lead_icon = QLabel()
+        self.input_lead_icon.setObjectName("inputLead")
+        self.input_lead_icon.setText(self.lead_input_str + " ")
+        self.input_row_layout.addWidget(self.input_lead_icon)
+
         self.input_text: QLineEdit = QLineEdit()
+        self.input_text.setObjectName("userInputBox")
+        self.input_text.setFrame(False)
+        # self.input_text.setFixedHeight(self.input_lead_icon.fontMetrics().height())
         self.input_text.returnPressed.connect(self.on_pressed)
-        self.terminal_layout.addWidget(self.input_text)
+        self.input_text.setContentsMargins(0, 0, 0, 0)
+
+        self.input_row_layout.addWidget(self.input_text)
+
+        self.terminal_layout.addWidget(self.input_row_holder)
+
+
         self.input_text.setFocus()
 
     def on_pressed(self):
-        self.history_text.setText(self.history_text.text() + "\n" + self.input_text.text())
+        self.history_text.setText(self.history_text.text() + f"\n{self.lead_input_str} " + self.input_text.text())
         # self.link_click_to_terminal(self.history_text)
         self.input_text.clear()
         print("Pressed")
@@ -93,7 +131,7 @@ class TerminalWidget(QWidget):
         # self.focus_on()
 
     def scroll_to_bottom(self):
-        time.sleep(0.05)
+        time.sleep(0.1)
         if self.scroll_container:
             self.scroll_container.verticalScrollBar().setValue(100000)
             v_bar = self.scroll_container.verticalScrollBar()
@@ -120,7 +158,8 @@ class SidebarWidget(QWidget):
         self.health_text = QLabel()
         self.health_text.setObjectName("healthBox")
         self.health_text.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
-        self.health_text.setText("Health:\n\nCharacter #1: 100 / 120\nCharacter #2: 50 / 70\nCharacter #3: 0 / 150")
+        health_lbl = get_resource(RegistryId.HealthLbl)
+        self.health_text.setText(f"{health_lbl}:\n\nCharacter #1: 100 / 120\nCharacter #2: 50 / 70\nCharacter #3: 0 / 150")
 
         self.inventory_text = QLabel()
         self.inventory_text.setObjectName("inventoryBox")
@@ -134,10 +173,12 @@ class SidebarWidget(QWidget):
 
 '''
 UI which can be used locally.
+This is not the PyQt5 window itself but acts as a generic med
 '''
 
 
 class LocalUI(AbstractUI):
+
     def __init__(self):
         pass
 
@@ -155,7 +196,5 @@ if __name__ == '__main__':
     app = QApplication([])
     window = MainWindow()
 
-    # window = TerminalWidget()
-    # window = SidebarWidget()
     window.showMaximized()
     app.exec()

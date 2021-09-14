@@ -1,4 +1,8 @@
+<!-- Warning Only change values inside of tags. Names must remain the same.-->
 <resources>
-    <string name="app_name">PyDnd</string>
-    <string name="formatRolled">Rolled: %d</string>
+    <string name="AppName">PyDnd</string>
+    <string name="InputTextPrefix">\></string>
+    <string name="LeadInputText">></string>
+    <string name="HealthLbl">Health</string>
+    <string name="InventoryLbl">Inventory</string>
 </resources>

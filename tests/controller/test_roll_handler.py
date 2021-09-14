@@ -4,18 +4,18 @@ from controller.roll_handler import RollHandler, RollType
 SAMPLE_SIZE = 50
 
 
-class TestRollHandler(unittest.TestCase):
+class TestIsValidExpressionHandler(unittest.TestCase):
 
     def setUp(self):
         self.handler = RollHandler()
         self.handler.ui.set_active(False)  # suppresses messages to make test terminal manageable
 
-    def test_isValidExpress_d20_shouldReturnTrue(self):
+    def test_isValidExpression_d20_shouldReturnTrue(self):
         in_expression = "d20 "
         result = self.handler._is_valid_expression(in_expression)
         self.assertTrue(result)
 
-    def test_isValidExpress_d12plus5_shouldReturnTrue(self):
+    def test_isValidExpression_d12plus5_shouldReturnTrue(self):
         in_expression = "d12 + 5 "
         result = self.handler._is_valid_expression(in_expression)
         self.assertTrue(result)
@@ -72,6 +72,13 @@ class TestRollHandler(unittest.TestCase):
             self.assertGreaterEqual(result, 4)
             self.assertLessEqual(result, 11)
 
+
+class TestRollHandler(unittest.TestCase):
+
+    def setUp(self):
+        self.handler = RollHandler()
+        self.handler.ui.set_active(False)  # suppresses messages to make test terminal manageable
+
     def test_roll_1d20_shouldHaveSamplesInRange(self):
         in_expression = "1d20"
         for _ in range(SAMPLE_SIZE):
@@ -113,6 +120,12 @@ class TestRollHandler(unittest.TestCase):
             result = self.handler.roll(in_expression)
             self.assertGreaterEqual(result, 11)
             self.assertLessEqual(result, 65)
+
+
+class TestSavingRollHandler(unittest.TestCase):
+    def setUp(self):
+        self.handler = RollHandler()
+        self.handler.ui.set_active(False)  # suppresses messages to make test terminal manageable
 
 
 if __name__ == '__main__':

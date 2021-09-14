@@ -1,42 +1,65 @@
+QWidget {
+    color: @ColorText;
+    margin:0px;
+    padding:0px;
+}
+
+QLabel {
+    background-color: transparent;
+    font-size: @MediumTextSize;
+    font-family: Consolas;
+    selection-background-color: @ColorSelectedText;
+}
+
 QWidget#window {
     background-color: @ColorTerminal;
-    color: @ColorWhite;
 }
 
 QWidget#terminal {
     background-color: transparent;
-    color: @ColorWhite;
 }
 
-QLabel {
-    color: @ColorWhite;
-    background-color: transparent;
+
+QLabel#historyText {
+    /*background: orange;*/
+}
+
+QWidget#inputRow {
+    margin: 0px;
+    /*background: green;*/
+    /*padding: 0px;*/
+    /*padding-top: -20px;*/
+    spacing: 0px;
+}
+
+QLabel#inputLead {
+    /*background: red;*/
+}
+
+QLineEdit#userInputBox {
+    background: transparent;
+    /*padding-top: 0px;*/
+    padding-left: -2px;
     font-size: @MediumTextSize;
     font-family: Consolas;
-
+    /*padding-left:-2px;*/
 }
 
+
+
 QLabel#healthBox {
-    border: @MediumBorderWidth solid @ColorRed;
+    border: @MediumBorderWidth solid @ColorHealth;
     border-radius: 4px;
     padding: 2px;
 }
 
 QLabel#inventoryBox {
-    border: @MediumBorderWidth solid @ColorBlue;
+    border: @MediumBorderWidth solid @ColorInventory;
     border-radius: 4px;
     padding: 2px;
 }
 
-QLineEdit {
-    background-color: transparent;
-    color: @ColorWhite;
-    qproperty-frame: false;
-    padding-top:-7px;
-    padding-left:-2px;
-    font-size: @MediumTextSize;
-    font-family: Consolas;
-}
+
 
 
 QScrollArea {
