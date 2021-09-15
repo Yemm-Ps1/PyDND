@@ -7,6 +7,8 @@
     <color name="ColorHealth">#FF0000</color>
     <color name="ColorError">#FF0000</color>
 
+    <color name="ColorOrange">#ff9900</color>
+
     <color name="ColorText">#FFF</color>
     <color name="ColorSelectedText">#00cc00</color>
     <color name="ColorYellow">#FFFF00</color>

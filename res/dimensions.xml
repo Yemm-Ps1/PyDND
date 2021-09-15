@@ -1,4 +1,5 @@
 <resources>
-    <dimen name = "MediumTextSize">20px</dimen>
-    <dimen name= "MediumBorderWidth">4px</dimen>
+    <dimen name="MediumTextSize">20px</dimen>
+    <dimen name="MediumBorderWidth">4px</dimen>
+    <dimen name="TerminalIndent">30px</dimen>
 </resources>

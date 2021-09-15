@@ -17,26 +17,25 @@ class BasicUI(AbstractUI):
     def submit_main_terminal_message(self, message):
         """ Submits a message to the main terminal where user inputs commands. """
         if self.active:
-            print(message)
+            print("Basic UI ->", message)
 
     def submit_main_terminal_error_message(self, message: str):
         """ Submits an error message to the main terminal and colors it red. """
         if self.active:
-            print(f"{Fore.RED}{message}{Style.RESET_ALL}")
+            print("Basic UI ->", f"{Fore.RED}{message}{Style.RESET_ALL}")
 
     def invalidate_health_display(self):
         """ Indicates that health display would be invalidated if it existed. """
         if self.active:
-            print(f"{Fore.BLUE}Healths Invalidated!{Style.RESET_ALL}")
+            print("Basic UI ->", f"{Fore.BLUE}Healths Invalidated!{Style.RESET_ALL}")
 
+
+    # depracated
     @staticmethod
     def _preformat_colors(message: str):
         """ Inserts colors to specific character sequences such as dice rolls, numbers and character names """
         for m in re.finditer(ONE_DIE_ROLL_MATCHER, message):
             pass
-        # TODO replace die rolls with color
-        # TODO numbers with color
-        # TODO replace character names with color
 
     def set_active(self, to_activate: bool):
         self.active = to_activate
