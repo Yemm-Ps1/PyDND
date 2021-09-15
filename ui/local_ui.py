@@ -1,6 +1,7 @@
 import re
 import threading
 import time
+from functools import partial
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QBoxLayout, QScrollArea
@@ -10,11 +11,12 @@ from res.R import RegistryId
 # from controller.command_mediator import CommandMediator
 from res.resource_loader import get_style_sheet, get_resource
 from ui.abstract_ui import AbstractUI
+from ui.html_builder import HTMLLineBuilder
 
 CONSOLE_CHARACTER_PATTERN = re.compile("[\d\w()+\-*/\s]")
 ERROR_TEXT_HEX = get_resource(RegistryId.ColorError)
 ERROR_TEXT_FORMAT = '<font color="{error_hex}">{text}</font>'
-
+TERMINAL_INPUT_SPACING = 10
 
 class CustomLayoutScheme:
     HORIZONTAL = 0
@@ -60,24 +62,53 @@ class LocalUI(QWidget, AbstractUI):
             self.main_layout.setDirection(QBoxLayout.Direction.TopToBottom)
             self.layout_scheme = CustomLayoutScheme.VERTICAL
 
-    def keyReleaseEvent(self, e: QtGui.QKeyEvent):
+    def keyReleaseEvent(self, event: QtGui.QKeyEvent):
         modifiers = QApplication.keyboardModifiers()
-        if modifiers == QtCore.Qt.ControlModifier and e.key() == QtCore.Qt.Key.Key_R:
-            self.sidebar_widget.switch_layout_orientation()
-            self.switch_layout_orientation()
-        as_str = e.text()
-        if CONSOLE_CHARACTER_PATTERN.fullmatch(as_str):
-            if not self.terminal_widget.is_focused():
-                self.terminal_widget.append_to_input(as_str)
-            self.terminal_widget.focus_on()
-            self.terminal_scroll.verticalScrollBar().setValue(self.terminal_scroll.height())
+        if modifiers == QtCore.Qt.ControlModifier :
+            if event.key() == QtCore.Qt.Key.Key_R:
+                self.sidebar_widget.switch_layout_orientation()
+                self.switch_layout_orientation()
+                self.terminal_widget.scroll_to_bottom()
+        elif modifiers == QtCore.Qt.AltModifier:
+            if event.key() == QtCore.Qt.Key.Key_E:
+                self.submit_main_terminal_error_message("This is a test error message.")
+            elif event.key() == QtCore.Qt.Key.Key_M:
+                self.submit_main_terminal_message("This is a test message.")
+            elif event.key() == QtCore.Qt.Key.Key_C:
+                red = get_resource(RegistryId.ColorRed)
+                green = get_resource(RegistryId.ColorGreen)
+                blue = get_resource(RegistryId.ColorBlue)
+                orange = get_resource(RegistryId.ColorOrange)
+                multi_coloured_text = HTMLLineBuilder().write_normal("This is a ")\
+                    .write_color("multi", red)\
+                    .write_normal('-')\
+                    .write_color('coloured ', green)\
+                    .write_color('test ', blue)\
+                    .write_color('message', orange)\
+                    .write_normal('.')\
+                    .build()
+                print(multi_coloured_text)
+                self.submit_main_terminal_message(multi_coloured_text, override_html=True)
+            self.terminal_widget.input_text.clear()
+        else:
+            if event.key() == QtCore.Qt.Key.Key_End:
+                self.terminal_widget.focus_on()
+                self.terminal_widget.scroll_to_bottom(is_delayed=False)
+            as_str = event.text()
+            if CONSOLE_CHARACTER_PATTERN.fullmatch(as_str):
+                if not self.terminal_widget.is_focused():
+                    self.terminal_widget.append_to_input(as_str)
+                self.terminal_widget.focus_on()
+                self.terminal_widget.scroll_to_bottom()
 
-    def submit_main_terminal_message(self, message):
+    def submit_main_terminal_message(self, message, override_html=False):
+        if not override_html:
+            message = HTMLLineBuilder().write_normal(message).build()
         self.terminal_widget.append_line_to_terminal(message)
 
     def submit_main_terminal_error_message(self, message):
-        # self.terminal_widget.append_line_to_terminal(ERROR_TEXT_FORMAT.format(error_hex="red", text=message))
-        self.terminal_widget.append_line_to_terminal(message)
+        formatted = HTMLLineBuilder().write_color(message, get_resource(RegistryId.ColorError)).build()
+        self.terminal_widget.append_line_to_terminal(formatted)
 
     def invalidate_health_display(self):
         print("Health display invalidated.")
@@ -111,7 +142,7 @@ class TerminalWidget(QWidget):
         # self.scroll_container.setFrameShape(QtFrame.)
         self.terminal_layout: QVBoxLayout = QVBoxLayout()
         self.terminal_layout.setAlignment(Qt.AlignTop)
-        self.terminal_layout.setSpacing(0)
+        self.terminal_layout.setSpacing(TERMINAL_INPUT_SPACING)
         self.setLayout(self.terminal_layout)
 
         # Initiates terminal log
@@ -179,15 +210,22 @@ class TerminalWidget(QWidget):
     def on_text_entered(self):
         user_input = self.input_text.text()
         self.input_text.clear()
-        self.append_line_to_terminal(f"{self.lead_input_str} {user_input}")
+        with_lead = f"{self.lead_input_str} {user_input}"
+        formatted = HTMLLineBuilder().write_normal(with_lead).build()
+        self.append_line_to_terminal(formatted)
         self.parent_ui.on_user_input_entered(user_input)
-        threading.Thread(target=self.scroll_to_bottom).start()
+        threading.Thread(target=self._scroll_to_bottom_without_thread).start()
 
-    def append_line_to_terminal(self, to_append: str):
-        self.history_text.setText(self.history_text.text() + "\n" + to_append)
+    def append_line_to_terminal(self, to_append_html: str):
+        self.history_text.setText(self.history_text.text() + to_append_html + "\n")
+        self.scroll_to_bottom()
 
-    def scroll_to_bottom(self):
-        time.sleep(0.1)
+    def scroll_to_bottom(self, is_delayed=True):
+        threading.Thread(target=partial(self._scroll_to_bottom_without_thread, is_delayed)).start()
+
+    def _scroll_to_bottom_without_thread(self, is_delayed=True):
+        if is_delayed:
+            time.sleep(0.1)
         if self.scroll_container:
             self.scroll_container.verticalScrollBar().setValue(100000)
             v_bar = self.scroll_container.verticalScrollBar()

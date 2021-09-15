@@ -25,7 +25,6 @@ QLabel#historyText {
 }
 
 QWidget#inputRow {
-    margin: 0px;
     /*background: green;*/
     /*padding: 0px;*/
     /*padding-top: -20px;*/
@@ -38,7 +37,7 @@ QLabel#inputLead {
 
 QLineEdit#userInputBox {
     background: transparent;
-    padding-top: -1px;
+    padding-top: 1px;
     padding-left: -2px;
     font-size: @MediumTextSize;
     font-family: Consolas;
