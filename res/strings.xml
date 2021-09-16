@@ -6,8 +6,45 @@
     <string name="HealthLbl">Health</string>
     <string name="InventoryLbl">Inventory</string>
 
-    <string name="ErrorMessageNoArgumentPathForCommand">No valid argument path defined for command: ::param:: (::param::).</string>
-    <string name="ErrorMessageArgumentPathNotSpecifiedForCommand">No validation specified for command ::param::.</string>
-    <string name="ErrorMessageExecutionNotSpecifiedForCommand">No execution specified for command ::param:: (::param::).</string>
-    <string name="ErrorUnrecognizedCommandOrShorthand">No command matching: ::param::.</string>
+    <string name="RollingStart">Rolling: ::param:: ::param::</string>
+    <string name="RollSingular">Rolled: ::param::</string>
+    <string name="RollResult">Result: ::param:: = ::param::</string>
+
+    <string name="ErrorMultipleDiceRolls">Multiple dice rolls found in expression e.g 1d20 + 1d4.</string>
+    <string name="ErrorNon1d20WithAdvantage">Non-1d20 expression not permitted with Advantage/Disadvantage.</string>
+    <string name="ErrorInvalidMathInExpression">Invalid math syntax in expression.</string>
+
+    <string name="ErrorUnrecognizedCommandOrShorthand">No command matching: ::param::</string>
+    <string name="ErrorIncorrectArgumentCount">Incorrect argument count for: ::param::. Expected: ::param::, Found: ::param::</string>
+    <string name="ErrorNoArgumentsAssignedToCommand">No arguments assigned to command: ::param::. Pass empty list if intended,</string>
+    <string name="ErrorNoArgumentTypeForCommand">No valid argument types defined for command: ::param::.</string>
+    <string name="ErrorIncorrectArgumentTypes">Incorrect argument types passed to ::param::.</string>
+    <string name="ErrorExecutionNotSpecifiedForCommand">No execution specified for command ::param::.</string>
+
+
+    <string name="SampleLongTerminalText">&lt;p&gt;&lt;span&gt;&gt; Players&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span style="color:#1E81B0"&gt;Jamuel &lt;/span&gt;&lt;span style="color:#FF0000"&gt;Sven &lt;/span&gt;&lt;span style="color:#00cc00"&gt;Varys &lt;/span&gt;&lt;span style="color:#FFFF00"&gt;Woodrow &lt;/span&gt;&lt;span style="color:#ff9900"&gt;Whiskers&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&gt; !ra &lt;span style="color:#FFFF00"&gt;1d20&lt;/span&gt; + 5&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Rolled: 20&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Rolled: 20&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Result: 20&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&gt; !r 2d15 + 5&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Rolled: 15&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Rolled: 15&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Result: 30&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&gt; Hit Arnac 30&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Arnac has taken 742 damage.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&gt; !rd 1d20&lt;/span&gt;&lt;/p&gt;H
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Rolled: 20&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Rolled: 20&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Result: 20&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&gt; !r 4d15 + 5&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Rolled: 15&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Rolled: 15&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Rolled: 15&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Rolled: 15&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Result: 60&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&gt; Hit Whiskers 60&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Whiskers is at 0 health.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="margin-left:30px"&gt;&lt;span&gt;Whiskers is dead.&lt;/span&gt;&lt;/p&gt;</string>
 </resources>

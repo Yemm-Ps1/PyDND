@@ -6,11 +6,12 @@ Defines the interface for concrete UIs
 
 
 class AbstractUI():
-    def submit_main_terminal_message(self, message):
+    # TODO simplify names
+    def submit_main_terminal_message(self, message, indents=0):
         """ Submits a message to the main terminal where user inputs commands. """
         pass
 
-    def submit_main_terminal_error_message(self, message):
+    def submit_main_terminal_error_message(self, message, indents=0):
         """ Submits an error message to the main terminal where user inputs commands likely due to invalid user-input. """
         pass
 

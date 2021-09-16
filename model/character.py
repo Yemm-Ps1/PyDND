@@ -30,6 +30,6 @@ class Player(Character):
         super().__init__(name, dnd_class)
 
 
-Bob = Player("Bob", CharacterSheet())
-Bob.print_name()
-print(Bob.get_max_health())
+# Bob = Player("Bob", CharacterSheet())
+# Bob.print_name()
+# print(Bob.get_max_health())

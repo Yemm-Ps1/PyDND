@@ -1,12 +1,14 @@
 import re
+import sys
 import threading
 import time
 from functools import partial
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QBoxLayout, QScrollArea
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QBoxLayout, QScrollArea, QMessageBox
 from qtpy import QtGui, QtCore
 
+from controller.command_mediator import CommandMediator
 from res.R import RegistryId
 # from controller.command_mediator import CommandMediator
 from res.resource_loader import get_style_sheet, get_resource
@@ -17,6 +19,17 @@ CONSOLE_CHARACTER_PATTERN = re.compile("[\d\w()+\-*/\s]")
 ERROR_TEXT_HEX = get_resource(RegistryId.ColorError)
 ERROR_TEXT_FORMAT = '<font color="{error_hex}">{text}</font>'
 TERMINAL_INPUT_SPACING = 10
+GRACE_PERIOD_IN_SECONDS = 0.05
+
+
+def catch_exceptions(t, val, tb):
+    QMessageBox.critical(None,
+                         "An exception was raised",
+                         "Exception type: {}".format(t))
+    old_hook(t, val, tb)
+
+old_hook = sys.excepthook
+sys.excepthook = catch_exceptions
 
 class CustomLayoutScheme:
     HORIZONTAL = 0
@@ -26,8 +39,8 @@ class CustomLayoutScheme:
 class LocalUI(QWidget, AbstractUI):
     def __init__(self):
         QWidget.__init__(self)
-        screen_geo = QApplication.desktop().screenGeometry()
 
+        screen_geo = QApplication.desktop().screenGeometry()
         self.resize(screen_geo.width() - 40, screen_geo.height() - 100)
         self.setWindowOpacity(float(get_resource(RegistryId.WindowOpacity)))
         self.setObjectName("window")
@@ -52,7 +65,9 @@ class LocalUI(QWidget, AbstractUI):
         self.main_layout.addWidget(self.sidebar_widget)
         self.terminal_widget.focus_on()
 
-        # self.command_mediator: CommandMediator = CommandMediator(self)
+        self.command_mediator: CommandMediator = CommandMediator(self)
+
+
 
     def switch_layout_orientation(self):
         if self.layout_scheme is CustomLayoutScheme.VERTICAL:
@@ -87,8 +102,13 @@ class LocalUI(QWidget, AbstractUI):
                     .write_color('message', orange)\
                     .write_normal('.')\
                     .build()
-                print(multi_coloured_text)
                 self.submit_main_terminal_message(multi_coloured_text, override_html=True)
+            elif event.key() == QtCore.Qt.Key.Key_X:
+                self.terminal_widget.history_text.clear()
+            elif event.key() == QtCore.Qt.Key.Key_L:
+                self.submit_main_terminal_message(get_resource(RegistryId.SampleLongTerminalText), override_html=True)
+            elif event.key() == QtCore.Qt.Key.Key_P:
+                raise RuntimeError
             self.terminal_widget.input_text.clear()
         else:
             if event.key() == QtCore.Qt.Key.Key_End:
@@ -101,21 +121,25 @@ class LocalUI(QWidget, AbstractUI):
                 self.terminal_widget.focus_on()
                 self.terminal_widget.scroll_to_bottom()
 
-    def submit_main_terminal_message(self, message, override_html=False):
+    def submit_main_terminal_message(self, message, indents=0, override_html=False):
+        # TODO migrate HTMLineBuilder to terminal widget to avoid referencing for indent
         if not override_html:
-            message = HTMLLineBuilder().write_normal(message).build()
+            message = HTMLLineBuilder(tab_depth=indents, tab_size=self.terminal_widget.indent_size).write_normal(message).build()
+        # threading.Thread(target=partial(self.terminal_widget.append_line_to_terminal, message)).start()
         self.terminal_widget.append_line_to_terminal(message)
 
-    def submit_main_terminal_error_message(self, message):
+    def submit_main_terminal_error_message(self, message, indents=0):
+        # TODO migrate HTMLineBuilder to terminal widget to avoid referencing for indent
         formatted = HTMLLineBuilder().write_color(message, get_resource(RegistryId.ColorError)).build()
+        # threading.Thread(target=partial(self.terminal_widget.append_line_to_terminal, formatted)).start()
         self.terminal_widget.append_line_to_terminal(formatted)
 
     def invalidate_health_display(self):
         print("Health display invalidated.")
 
     def on_user_input_entered(self, user_input: str):
-        # self.command_mediator.process_command(user_input)
-        pass
+        self.command_mediator.process_command(user_input)
+        # threading.Thread(target=partial(self.command_mediator.process_command, user_input)).start()
 
     # def resizeEvent(self, e: QtGui.QResizeEvent):
     #     super().resizeEvent(e)
@@ -143,40 +167,13 @@ class TerminalWidget(QWidget):
         self.terminal_layout: QVBoxLayout = QVBoxLayout()
         self.terminal_layout.setAlignment(Qt.AlignTop)
         self.terminal_layout.setSpacing(TERMINAL_INPUT_SPACING)
+        self.indent_size = int(get_resource(RegistryId.TerminalIndent)[:-2])
         self.setLayout(self.terminal_layout)
 
         # Initiates terminal log
         self.history_text: QLabel = QLabel()
         self.history_text.setObjectName("historyText")
         # TODO replace sample text
-        sample_text = """
-            <p><span>&gt; Players</span></p>
-<p style="margin-left:30px"><span style="color:#1E81B0">Jamuel </span><span style="color:#FF0000">Sven </span><span style="color:#00cc00">Varys </span><span style="color:#FFFF00">Woodrow </span><span style="color:#ff9900">Whiskers</span></p>
-<p>&gt; !ra <span style="color:#FFFF00">1d20</span> + 5</p>
-<p style="margin-left:30px"><span>Rolled: 20</span></p>
-<p style="margin-left:30px"><span>Rolled: 20</span></p>
-<p style="margin-left:30px"><span>Result: 20</span></p>
-<p><span>&gt; !r 2d15 + 5</span></p>
-<p style="margin-left:30px"><span>Rolled: 15</span></p>
-<p style="margin-left:30px"><span>Rolled: 15</span></p>
-<p style="margin-left:30px"><span>Result: 30</span></p>
-<p><span>&gt; Hit Arnac 30</span></p>
-<p style="margin-left:30px"><span>Arnac has taken 742 damage.</span></p>
-<p><span>&gt; !rd 1d20</span></p>
-<p style="margin-left:30px"><span>Rolled: 20</span></p>
-<p style="margin-left:30px"><span>Rolled: 20</span></p>
-<p style="margin-left:30px"><span>Result: 20</span></p>
-<p><span>&gt; !r 4d15 + 5</span></p>
-<p style="margin-left:30px"><span>Rolled: 15</span></p>
-<p style="margin-left:30px"><span>Rolled: 15</span></p>
-<p style="margin-left:30px"><span>Rolled: 15</span></p>
-<p style="margin-left:30px"><span>Rolled: 15</span></p>
-<p style="margin-left:30px"><span>Result: 60</span></p>
-<p><span>&gt; Hit Whiskers 60</span></p>
-<p style="margin-left:30px"><span>Whiskers is at 0 health.</span></p>
-<p style="margin-left:30px"><span>Whiskers is dead.</span></p>
-        """
-        self.history_text.setText(sample_text)
         self.history_text.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
         self.terminal_layout.addWidget(self.history_text)
 
@@ -217,6 +214,7 @@ class TerminalWidget(QWidget):
         threading.Thread(target=self._scroll_to_bottom_without_thread).start()
 
     def append_line_to_terminal(self, to_append_html: str):
+        # time.sleep(GRACE_PERIOD_IN_SECONDS)
         self.history_text.setText(self.history_text.text() + to_append_html + "\n")
         self.scroll_to_bottom()
 
@@ -225,7 +223,7 @@ class TerminalWidget(QWidget):
 
     def _scroll_to_bottom_without_thread(self, is_delayed=True):
         if is_delayed:
-            time.sleep(0.1)
+            time.sleep(GRACE_PERIOD_IN_SECONDS)
         if self.scroll_container:
             self.scroll_container.verticalScrollBar().setValue(100000)
             v_bar = self.scroll_container.verticalScrollBar()
@@ -274,11 +272,6 @@ class SidebarWidget(QWidget):
             self.main_layout.setDirection(QBoxLayout.Direction.TopToBottom)
             self.layout_scheme = CustomLayoutScheme.VERTICAL
 
-
-def test_func(ui: LocalUI, delay, message):
-    time.sleep(delay)
-    print(message)
-    ui.submit_main_terminal_message(message)
 
 
 if __name__ == '__main__':

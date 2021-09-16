@@ -93,6 +93,8 @@ for i, k_v in enumerate(merged.items()):
     RESOURCES[i] = k_v[1]
 r_file.close()
 
+# TODO validate resource names
+
 from res.R import RegistryId
 
 
@@ -105,9 +107,9 @@ def get_formatted_resource(reg_id: RegistryId, *args) -> str:
     matches = re.findall(PARAM_TOKEN, to_rtn)
     count_in_str = len(matches)
     if not len(matches) == len(args):
-        raise Exception(f"Parameter count mismatch in string: \"{to_rtn}\". Expeted {len(args)}")
-    print(to_rtn.replace(PARAM_TOKEN, "{}"))
-    print(args)
+        raise Exception(f"Parameter count mismatch for string: \"{to_rtn}\". Found: {len(args)}")
+    # print(to_rtn.replace(PARAM_TOKEN, "{}"))
+    # print(args)
     return to_rtn.replace(PARAM_TOKEN, "{}").format(*args)
 
 def get_color_palette() -> dict:
@@ -131,5 +133,5 @@ def get_style_sheet() -> str:
 
 
 if __name__ == '__main__':
-    found = get_formatted_resource(RegistryId.ErrorMessageNoArgumentPathForCommand, "Roll", "!r")
-    print(found)
+    # found = get_formatted_resource(RegistryId.ErrorMessageNoArgumentPathForCommand, "Roll", "!r")
+    pass

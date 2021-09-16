@@ -14,12 +14,12 @@ class BasicUI(AbstractUI):
     def __init__(self):
         self.active = True
 
-    def submit_main_terminal_message(self, message):
+    def submit_main_terminal_message(self, message, indents=0):
         """ Submits a message to the main terminal where user inputs commands. """
         if self.active:
             print("Basic UI ->", message)
 
-    def submit_main_terminal_error_message(self, message: str):
+    def submit_main_terminal_error_message(self, message: str, indents=0):
         """ Submits an error message to the main terminal and colors it red. """
         if self.active:
             print("Basic UI ->", f"{Fore.RED}{message}{Style.RESET_ALL}")

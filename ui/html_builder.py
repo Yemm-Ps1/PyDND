@@ -17,13 +17,7 @@ VALID_HEX_REGEX = "#([0-9A-Fa-f]{3})([0-9A-Fa-f]{3})?"
 class HTMLLineBuilder:
     def __init__(self, tab_depth=0, tab_size: int = None):
         if tab_depth > 0:
-            if tab_size is None:
-                # avoids importing resources in unit testing
-                from res.R import RegistryId
-                from res.resource_loader import get_resource
-                tab_size = get_resource(RegistryId.TerminalIndent)
-            else:
-                self.to_build = TAG_OPEN_INDENTED_PARAGRAPH.format(tab_size * tab_depth)
+            self.to_build = TAG_OPEN_INDENTED_PARAGRAPH.format(tab_size * tab_depth)
         else:
             self.to_build = TAG_OPEN_PARAGRAPH
 

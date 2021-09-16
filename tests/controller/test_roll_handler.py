@@ -12,57 +12,57 @@ class TestIsValidExpressionHandler(unittest.TestCase):
 
     def test_isValidExpression_d20_shouldReturnTrue(self):
         in_expression = "d20 "
-        result = self.handler._is_valid_expression(in_expression)
+        result = self.handler.is_valid_expression(in_expression)
         self.assertTrue(result)
 
     def test_isValidExpression_d12plus5_shouldReturnTrue(self):
         in_expression = "d12 + 5 "
-        result = self.handler._is_valid_expression(in_expression)
+        result = self.handler.is_valid_expression(in_expression)
         self.assertTrue(result)
 
     def test_isValidExpression_1d20_shouldReturnTrue(self):
         in_expression = "1d20 "
-        result = self.handler._is_valid_expression(in_expression)
+        result = self.handler.is_valid_expression(in_expression)
         self.assertTrue(result)
 
     def test_isValidExpression_1d20plus5_shouldReturnTrue(self):
         in_expression = " 1d20+5"
-        result = self.handler._is_valid_expression(in_expression)
+        result = self.handler.is_valid_expression(in_expression)
         self.assertTrue(result)
 
     def test_isValidExpression_1d20minus7_shouldReturnTrue(self):
         in_expression = "1d20 - 7"
-        result = self.handler._is_valid_expression(in_expression)
+        result = self.handler.is_valid_expression(in_expression)
         self.assertTrue(result)
 
     def test_isValidExpression_1d20minus3withAdvantage_shouldReturnTrue(self):
         in_expression = "1d20- 3"
-        result = self.handler._is_valid_expression(in_expression, roll_type=RollType.ADVANTAGE)
+        result = self.handler.is_valid_expression(in_expression, roll_type=RollType.ADVANTAGE)
         self.assertTrue(result)
 
     def test_isValidExpression_1d20plus1d4plus5_shouldReturnFalse(self):
         in_expression = "1d20+1d4+5"
-        result = self.handler._is_valid_expression(in_expression)
+        result = self.handler.is_valid_expression(in_expression)
         self.assertFalse(result)
 
     def test_isValidExpression_1d12minus7withAdvantage_shouldReturnFalse(self):
         in_expression = "1d12-7"
-        result = self.handler._is_valid_expression(in_expression, roll_type=RollType.ADVANTAGE)
+        result = self.handler.is_valid_expression(in_expression, roll_type=RollType.ADVANTAGE)
         self.assertFalse(result)
 
     def test_isValidExpression_2d20minus2withAdvantage_shouldReturnFalse(self):
         in_expression = "2d20-2"
-        result = self.handler._is_valid_expression(in_expression, roll_type=RollType.ADVANTAGE)
+        result = self.handler.is_valid_expression(in_expression, roll_type=RollType.ADVANTAGE)
         self.assertFalse(result)
 
     def test_isValidExpression_1d12minus7WithSuperDisadvantage_shouldReturnFalse(self):
         in_expression = "1d12-7"
-        result = self.handler._is_valid_expression(in_expression, roll_type=RollType.SUPER_DISADVANTAGE)
+        result = self.handler.is_valid_expression(in_expression, roll_type=RollType.SUPER_DISADVANTAGE)
         self.assertFalse(result)
 
     def test_isValidExpression_invalidMath_shouldReturnFalse(self):
         in_expression = "1d12-*-7"
-        result = self.handler._is_valid_expression(in_expression)
+        result = self.handler.is_valid_expression(in_expression)
         self.assertFalse(result)
 
     def test_roll_1d8plus3_shouldHaveSamplesInRange(self):

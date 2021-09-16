@@ -1,6 +1,7 @@
 import math
 import random
 import re
+import time
 from enum import Enum
 
 from ui.abstract_ui import AbstractUI
@@ -8,6 +9,8 @@ from ui.basic_ui import BasicUI
 from model.character_sheet import SheetData
 from model.sheet_enums import Ability
 from model.dnd_classes import Rogue
+from res.R import RegistryId
+from res.resource_loader import get_resource, get_formatted_resource
 
 ONE_DIE_ROLL_MATCHER = re.compile("((\\d*)d(\\d+))")
 ONE_D_TWENTY_MATCHER = re.compile("([+-]*\\d*)*1d20([+-]*\\d+)*")
@@ -76,21 +79,26 @@ class RollHandler:
         :param roll_type: An enumeration indicating whether the roll is standard or has advantage, disadvantage.
         :return: the evaluation of the mathematical expression when diced rolls have been evaluated.
         """
+        print("INPUT:", roll_expression, roll_type)
         roll_expression = self._preformat_expression(roll_expression)
-        if self._is_valid_expression(roll_expression, roll_type):
+        if self.is_valid_expression(roll_expression, roll_type):
             roll_match = re.search(ONE_DIE_ROLL_MATCHER, roll_expression)
+            dice_count: int = -1
             if roll_match:
                 full_match, dice_count, face_count = roll_match.groups()
                 total = 0
                 adv_roll_count = abs(roll_type.value) + 1
-                self.ui.submit_main_terminal_message(f"Rolling {full_match} {roll_type.get_postfix()}:")
+                self.ui.submit_main_terminal_message(get_formatted_resource(RegistryId.RollingStart, full_match, roll_type.get_postfix()), indents=1)
                 for d in range(int(dice_count)):
                     rolls = [random.randint(1, int(face_count)) for _ in range(adv_roll_count)]
-                    self.ui.submit_main_terminal_message("\n".join([str(s) for s in rolls]))
+                    for s in rolls:
+                        self.ui.submit_main_terminal_message(get_formatted_resource(RegistryId.RollSingular, str(s)), indents=1)
+                    # self.ui.submit_main_terminal_message("\n".join([str(s) for s in rolls]), indents=1)
                     total += max(rolls) if roll_type.value >= 0 else min(rolls)
                 roll_expression = roll_expression.replace(full_match, str(total), 1)
             to_rtn = eval(roll_expression)
-            self.ui.submit_main_terminal_message(roll_expression + " = " + str(to_rtn))
+            message = get_formatted_resource(RegistryId.RollResult, roll_expression, str(to_rtn))
+            self.ui.submit_main_terminal_message(message, indents=1)
             return int(to_rtn)
 
     def roll_advantage(self, roll_expression) -> int:
@@ -129,7 +137,7 @@ class RollHandler:
         """
         return self.roll(roll_expression, roll_type=RollType.SUPER_DISADVANTAGE)
 
-    def _is_valid_expression(self, roll_expression, roll_type=RollType.STANDARD) -> bool:
+    def is_valid_expression(self, roll_expression, roll_type=RollType.STANDARD) -> bool:
         """
         Checks the validity an inputted expression written in dice notation and submits a custom error message to the
         ui if the expression is in an unexpected form.
@@ -141,15 +149,15 @@ class RollHandler:
         preformatted_expression = RollHandler._preformat_expression(roll_expression)
         expression_without_dice = re.sub(ONE_DIE_ROLL_MATCHER, "0", preformatted_expression)
         if len(list(re.finditer(ONE_DIE_ROLL_MATCHER, preformatted_expression))) > 1:
-            self.ui.submit_main_terminal_error_message("Multiple dice rolls found in expression e.g 1d20 + 1d4.")
+            self.ui.submit_main_terminal_error_message(get_resource(RegistryId.ErrorMultipleDiceRolls))
             return False
         elif not re.fullmatch(ONE_D_TWENTY_MATCHER, preformatted_expression) and roll_type is not RollType.STANDARD:
-            self.ui.submit_main_terminal_error_message("Non-1d20 expression not permitted with Advantage/Disadvantage")
+            self.ui.submit_main_terminal_error_message(get_resource(RegistryId.ErrorNon1d20WithAdvantage))
             return False
         try:
             eval(expression_without_dice)
-        except SyntaxError:
-            self.ui.submit_main_terminal_error_message("Invalid math syntax in expression.")
+        except Exception:
+            self.ui.submit_main_terminal_error_message(get_resource(RegistryId.ErrorInvalidMathInExpression))
             return False
         return True
 
@@ -160,7 +168,7 @@ class RollHandler:
 
         :return: the string prepended with a 1
         """
-        if roll_expression[0] is "d":
+        if roll_expression[0] == "d":
             roll_expression = "1" + roll_expression
         return re.sub("\\s", "", roll_expression)
 
